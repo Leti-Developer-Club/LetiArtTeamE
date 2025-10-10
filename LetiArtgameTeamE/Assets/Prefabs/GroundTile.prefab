@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53481c8bcc38286478c3d2f976c74e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundTile
+  coinPrefab: {fileID: 1243235315148163998, guid: 4c284189083ca0d49aec9c345bf96fbb, type: 3}
 --- !u!1 &8573578133913614379
 GameObject:
   m_ObjectHideFlags: 0
