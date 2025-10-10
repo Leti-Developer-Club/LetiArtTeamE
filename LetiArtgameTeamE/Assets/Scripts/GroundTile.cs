@@ -7,6 +7,7 @@ public class GroundTile : MonoBehaviour
     private void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
+        SpawnObstacle();
         SpawnCoins();
     }
 
@@ -14,6 +15,23 @@ public class GroundTile : MonoBehaviour
     {
         groundSpawner.SpawnTile();
         Destroy(gameObject, 2);
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    public GameObject obstaclePrefab;
+
+    void SpawnObstacle ()
+    {
+        // Choose a random point to spawn the obstacle
+        int obstacleSpawnIndex = Random.Range(2, 5);
+        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+
+        // Spawn the obstacle at the position
+        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 
     public GameObject coinPrefab;

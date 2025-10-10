@@ -9,10 +9,11 @@ public class Coin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        // if (other.gameObject.GetComponent<THE OBSTACLE>() != NULL)
-        // { Destroy(gameObject);
-        // return;
-        // }
+        if (other.gameObject.GetComponent<Obstacle>() != null)
+        {   
+            Destroy(gameObject);
+            return;
+        }
 
         // Check that the object we collided with is the player
         if (other.gameObject.name != "Player")
