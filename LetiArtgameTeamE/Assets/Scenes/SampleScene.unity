@@ -906,10 +906,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64662bfadd04974ca4da1cd2854667f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 5
+  speed: 10
   jumpForce: 5
   rb: {fileID: 1613124589}
-  horizontalMultiplier: 3
+  horizontalMultiplier: 1.7
 --- !u!1 &1917439594
 GameObject:
   m_ObjectHideFlags: 0
