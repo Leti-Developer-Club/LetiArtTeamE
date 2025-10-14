@@ -1,71 +1,68 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     bool alive = true;
 
-    public float speed = 5;
-    public float jumpForce = 5f; // how high the player jumps
+    public float speed = 5f;
+    public float jumpForce = 7f;
     public Rigidbody rb;
 
-    float horizontalInput;
-    public float horizontalMultiplier = 2;
+    private int lane = 1; // 0 = left, 1 = middle, 2 = right
+    public float laneDistance = 2.5f; // distance between lanes
+    public float laneChangeSpeed = 10f; // how fast to slide between lanes
 
-    bool isGrounded = true; // check if player is on the ground
+    bool isGrounded = true;
 
-    private void FixedUpdate()
+    void Update()
     {
         if (!alive) return;
 
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        // forward movement
+        Vector3 forwardMove = transform.forward * speed * Time.deltaTime;
+        rb.MovePosition(rb.position + forwardMove);
+
+        // lane switching
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && lane > 0)
+            lane--;
+        if (Input.GetKeyDown(KeyCode.RightArrow) && lane < 2)
+            lane++;
+
+        // jump
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            Jump();
+
+        // move smoothly to target lane
+        Vector3 targetPosition = new Vector3((lane - 1) * laneDistance, rb.position.y, rb.position.z);
+        Vector3 moveTo = Vector3.MoveTowards(rb.position, targetPosition, laneChangeSpeed * Time.deltaTime);
+        rb.MovePosition(new Vector3(moveTo.x, rb.position.y, rb.position.z + speed * Time.deltaTime));
+
+        // fall check
+        if (transform.position.y < -5)
+            Die();
     }
 
-    private void Update()
+    void Jump()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+    }
 
-        // jump input
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            Jump();
-        }
-
-        if (transform.position.y < -5)
-        {
-            Die();
-        }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            isGrounded = true;
     }
 
     public void Die()
     {
         alive = false;
-        // Restart the game
         Invoke("Restart", 2);
     }
 
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private void Jump()
-    {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
-    }
-
-    // detect when player lands back on the ground
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
     }
 }

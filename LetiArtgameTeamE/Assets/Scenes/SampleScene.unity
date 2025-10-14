@@ -907,9 +907,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 10
-  jumpForce: 5
+  jumpForce: 7
   rb: {fileID: 1613124589}
-  horizontalMultiplier: 1.7
+  laneDistance: 2.5
+  laneChangeSpeed: 10
 --- !u!1 &1917439594
 GameObject:
   m_ObjectHideFlags: 0
