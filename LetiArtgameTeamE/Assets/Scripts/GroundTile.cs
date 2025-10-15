@@ -14,7 +14,18 @@ public class GroundTile : MonoBehaviour
     [Header("Coin Settings")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private int coinsToSpawn = 10;
-    [SerializeField] private float laneDistance = 2.5f; 
+    [SerializeField] private float laneDistance = 2.5f;
+
+    [Header("power-Up Settings")]
+    [SerializeField] private GameObject jumpingBotsPrefab;
+    [SerializeField] private GameObject randomBuffPrefab;
+    [SerializeField] private GameObject magnetPrefab;
+    [SerializeField] private GameObject skipPrefab;
+    [SerializeField] private GameObject speedBurstPrefab;
+    [SerializeField] private GameObject invinciblePrefab;
+
+    [SerializeField] private float powerUPSpawnChance = 0.09f;
+
 
     private void Start()
     {
@@ -65,5 +76,41 @@ public class GroundTile : MonoBehaviour
         }
     }
 
-    
+    void SpawnPowerUp() 
+    { 
+        float randomChance = Random.Range(0f, 1f);
+        if (randomChance > powerUPSpawnChance) return;
+
+        int randomIndex = Random.Range(0, 6);
+        GameObject powerUpToSpawn = null;
+        switch (randomIndex)
+        {
+            case 0:
+                powerUpToSpawn = jumpingBotsPrefab;
+                break;
+            case 1:
+                powerUpToSpawn = randomBuffPrefab;
+                break;
+            case 2:
+                powerUpToSpawn = magnetPrefab;
+                break;
+            case 3:
+                powerUpToSpawn = skipPrefab;
+                break;
+            case 4:
+                powerUpToSpawn = speedBurstPrefab;
+                break;
+            case 5:
+                powerUpToSpawn = invinciblePrefab;
+                break;
+        }
+
+        int lane = Random.Range(0, 3);
+        float laneX = (lane - 1) * laneDistance;
+
+        float zoffsetZ = Random.Range(5f, 15f);
+        Vector3 spaenPos = transform.position + new Vector3(laneX, 1f, zoffsetZ);
+
+        Instantiate(powerUpToSpawn, spaenPos, Quaternion.identity, transform);
+    }
 }
