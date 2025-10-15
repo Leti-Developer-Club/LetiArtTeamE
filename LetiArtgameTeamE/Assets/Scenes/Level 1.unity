@@ -875,7 +875,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613124580}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 2.5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -906,11 +906,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64662bfadd04974ca4da1cd2854667f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 10
-  jumpForce: 7
+  speed: 5
+  jumpForce: 15
   rb: {fileID: 1613124589}
   laneDistance: 2.5
-  laneChangeSpeed: 10
+  laneChangeSpeed: 14
 --- !u!1 &1917439594
 GameObject:
   m_ObjectHideFlags: 0

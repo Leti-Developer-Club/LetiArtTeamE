@@ -168,9 +168,9 @@ MonoBehaviour:
   tallObstaclePrefab: {fileID: 5818178412312413687, guid: 75dbed285a4eb9848998542ec433d912, type: 3}
   tallObstacleChance: 0.25
   rampPrefab: {fileID: 5818178412312413687, guid: 09d84038c23b75a4a9d5aa91c9180956, type: 3}
-  rampChance: 0.25
+  rampChance: 0.1
   coinPrefab: {fileID: 1243235315148163998, guid: 4c284189083ca0d49aec9c345bf96fbb, type: 3}
-  coinsToSpawn: 6
+  coinsToSpawn: 4
   laneDistance: 2.5
 --- !u!1 &8573578133913614379
 GameObject:
