@@ -172,6 +172,13 @@ MonoBehaviour:
   coinPrefab: {fileID: 1243235315148163998, guid: 4c284189083ca0d49aec9c345bf96fbb, type: 3}
   coinsToSpawn: 4
   laneDistance: 2.5
+  jumpingBotsPrefab: {fileID: 0}
+  randomBuffPrefab: {fileID: 0}
+  magnetPrefab: {fileID: 6361830067093214047, guid: 1e85233705480114fb21d0946a84d1bb, type: 3}
+  skipPrefab: {fileID: 0}
+  speedBurstPrefab: {fileID: 0}
+  invinciblePrefab: {fileID: 0}
+  powerUPSpawnChance: 100
 --- !u!1 &8573578133913614379
 GameObject:
   m_ObjectHideFlags: 0
