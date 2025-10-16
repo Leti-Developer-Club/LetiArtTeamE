@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 9180850995886486210}
   m_Layer: 0
   m_Name: GroundTile
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GroundTile
   obstaclePrefab: {fileID: 5818178412312413687, guid: 86dabea278644ba429c1b46da215bb50, type: 3}
   coinPrefab: {fileID: 1243235315148163998, guid: 4c284189083ca0d49aec9c345bf96fbb, type: 3}
+  jumpBootsPrefab: {fileID: 528754807682427117, guid: 105a46ab2c35f6c4998e589792af8485, type: 3}
 --- !u!1 &8573578133913614379
 GameObject:
   m_ObjectHideFlags: 0
