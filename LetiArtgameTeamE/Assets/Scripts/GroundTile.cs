@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GroundTile : MonoBehaviour
 {
@@ -7,14 +8,17 @@ public class GroundTile : MonoBehaviour
     [Header("Prefabs")]
     public GameObject obstaclePrefab;
     public GameObject coinPrefab;
-    public GameObject jumpBootsPrefab; // 👈 NEW
+    public GameObject jumpBootsPrefab;
+    public GameObject speedBurstPrefab; // 👈 NEW Power-up
 
     private void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
+
         SpawnObstacle();
         SpawnCoins();
-        SpawnJumpBoots(); // 👈 NEW
+        SpawnJumpBoots();
+        SpawnSpeedBurst(); // 👈 NEW
     }
 
     private void OnTriggerExit(Collider other)
@@ -23,11 +27,12 @@ public class GroundTile : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
+    // ----------------- SPAWN METHODS -----------------
+
     void SpawnObstacle()
     {
         int obstacleSpawnIndex = Random.Range(2, 5);
         Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
-
         Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 
@@ -43,12 +48,23 @@ public class GroundTile : MonoBehaviour
 
     void SpawnJumpBoots()
     {
-        // 👇 25% chance to spawn JumpBoots on this tile
-        if (Random.value < 0.25f)
+        // 👇 25% chance to spawn JumpBoots
+        if (Random.value < 0.25f && jumpBootsPrefab != null)
         {
             Vector3 spawnPos = GetRandomPointInCollider(GetComponent<Collider>());
-            spawnPos.y = 1f; // Make sure it sits above the ground
+            spawnPos.y = 1f;
             Instantiate(jumpBootsPrefab, spawnPos, Quaternion.identity, transform);
+        }
+    }
+
+    void SpawnSpeedBurst()
+    {
+        // 👇 25% chance to spawn SpeedBurst
+        if (Random.value < 0.25f && speedBurstPrefab != null)
+        {
+            Vector3 spawnPos = GetRandomPointInCollider(GetComponent<Collider>());
+            spawnPos.y = 1f;
+            Instantiate(speedBurstPrefab, spawnPos, Quaternion.identity, transform);
         }
     }
 
@@ -69,3 +85,5 @@ public class GroundTile : MonoBehaviour
         return point;
     }
 }
+
+

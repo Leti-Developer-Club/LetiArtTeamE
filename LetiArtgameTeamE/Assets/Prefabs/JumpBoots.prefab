@@ -104,6 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a75d0b6c4bb924a91ce440af159588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpBoots
+  jumpBoost: 2
+  boostDuration: 5
+  pickupEffect: {fileID: 0}
 --- !u!65 &6791611837618965467
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,7 +126,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5555269, y: 3.8537529, z: 0.6978504}
+  m_Size: {x: 1.5555269, y: 3.8537529, z: 3.853753}
   m_Center: {x: 0, y: 0.007861257, z: 0}
 --- !u!1001 &2860904348935685444
 PrefabInstance:
