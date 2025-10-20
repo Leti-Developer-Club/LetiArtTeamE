@@ -238,8 +238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RandomPowerUp
   powerUps:
   - {fileID: 1403986917063174929, guid: cfc83fe37a245014c8ac3dcb33eb0654, type: 3}
-  - {fileID: 4876065486178677593, guid: 85ba8d9d3a5b190468abc7e71774833c, type: 3}
+  - {fileID: 7444113253637588304, guid: 08630134af11593499a3ba99ceeae81a, type: 3}
   - {fileID: 6361830067093214047, guid: 1e85233705480114fb21d0946a84d1bb, type: 3}
   - {fileID: 6966575709926250402, guid: 38f51eb2fb0c2c94db2408a9009a6d92, type: 3}
-  - {fileID: 0}
+  - {fileID: 8812574902481646648, guid: 646552a709a948a448a185d07fcf07dc, type: 3}
   pickupEffect: {fileID: 0}
