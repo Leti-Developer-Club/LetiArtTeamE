@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,28 +9,39 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float speed = 5f;
     public float jumpForce = 7f;
-    public float laneDistance = 2.5f; 
+    public float laneDistance = 2.5f;
     public float laneChangeSpeed = 10f;
 
     [Header("Sliding Settings")]
     public float slideDuration = 1f;
-    public float slideHeight = 0.5f; 
+    public float slideHeight = 0.5f;
     private bool isSliding = false;
     private float originalColliderHeight;
     private Vector3 originalColliderCenter;
+
+    [Header("Invincibility Settings")]
+    public bool isInvincible = false;
+    public float invincibleDuration = 7f;
+    private Renderer playerRenderer;
+    private Color originalColor;
 
     [Header("References")]
     public Rigidbody rb;
     private CapsuleCollider playerCollider;
 
-    private int lane = 1; 
+    private int lane = 1;
     private bool isGrounded = true;
 
     void Start()
     {
         playerCollider = GetComponent<CapsuleCollider>();
+        playerRenderer = GetComponentInChildren<Renderer>();
+
         originalColliderHeight = playerCollider.height;
         originalColliderCenter = playerCollider.center;
+
+        if (playerRenderer != null)
+            originalColor = playerRenderer.material.color;
     }
 
     void Update()
@@ -48,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forwardMove = transform.forward * speed * Time.deltaTime;
         rb.MovePosition(rb.position + forwardMove);
 
-        // Smoothly move between lanes
         Vector3 targetPosition = new Vector3((lane - 1) * laneDistance, rb.position.y, rb.position.z);
         Vector3 moveTo = Vector3.MoveTowards(rb.position, targetPosition, laneChangeSpeed * Time.deltaTime);
         rb.MovePosition(new Vector3(moveTo.x, rb.position.y, rb.position.z + speed * Time.deltaTime));
@@ -82,17 +93,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator Slide()
+    IEnumerator Slide()
     {
         isSliding = true;
 
-        // Shrink collider to simulate ducking
         playerCollider.height = slideHeight;
         playerCollider.center = new Vector3(originalColliderCenter.x, slideHeight / 2f, originalColliderCenter.z);
 
         yield return new WaitForSeconds(slideDuration);
 
-        // Reset collider
         playerCollider.height = originalColliderHeight;
         playerCollider.center = originalColliderCenter;
 
@@ -109,6 +118,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            if (isInvincible)
+            {
+                Destroy(collision.gameObject); // Destroy obstacle if invincible
+            }
+            else
+            {
+                Die();
+            }
+        }
     }
 
     void CheckFall()
@@ -126,5 +147,34 @@ public class PlayerMovement : MonoBehaviour
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Public method to activate invincibility
+    public void ActivateInvincibility()
+    {
+        if (!isInvincible)
+            StartCoroutine(InvincibilityRoutine());
+    }
+
+    IEnumerator InvincibilityRoutine()
+    {
+        isInvincible = true;
+        float timer = 0f;
+
+        // Flash yellow color while invincible
+        while (timer < invincibleDuration)
+        {
+            if (playerRenderer != null)
+                playerRenderer.material.color = Color.Lerp(originalColor, Color.yellow, Mathf.PingPong(Time.time * 5f, 1));
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset color and state
+        if (playerRenderer != null)
+            playerRenderer.material.color = originalColor;
+
+        isInvincible = false;
     }
 }

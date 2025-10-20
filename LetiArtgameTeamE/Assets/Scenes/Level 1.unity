@@ -1012,6 +1012,8 @@ MonoBehaviour:
   laneChangeSpeed: 16
   slideDuration: 0.5
   slideHeight: 0.5
+  isInvincible: 0
+  invincibleDuration: 7
   rb: {fileID: 1613124589}
 --- !u!114 &1613124591
 MonoBehaviour:
