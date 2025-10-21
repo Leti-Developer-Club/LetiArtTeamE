@@ -316,6 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebb83742de97ee4ea013d675eee5ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeedBurst
+  speedMultiplier: 2
+  boostDuration: 3
+  pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  volume: 1
 --- !u!65 &4327929331008881892
 BoxCollider:
   m_ObjectHideFlags: 0

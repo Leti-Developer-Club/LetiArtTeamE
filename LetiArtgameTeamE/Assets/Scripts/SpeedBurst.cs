@@ -16,6 +16,7 @@ public class SpeedBurst : MonoBehaviour
     private static Coroutine activeBoostCoroutine;
 
     private AudioSource audioSource;
+    private const float baseSpeed = 6.5f;   // Default player speed
 
     void Start()
     {
@@ -55,17 +56,16 @@ public class SpeedBurst : MonoBehaviour
     IEnumerator ApplySpeedBoost(PlayerMovement movement)
     {
         isBoostActive = true;
-        float originalSpeed = movement.speed;
 
         // Apply boost
-        movement.speed = originalSpeed * speedMultiplier;
+        movement.speed = baseSpeed * speedMultiplier;
         Debug.Log("Speed burst activated! Speed = " + movement.speed);
 
         // Wait for the boost duration
         yield return new WaitForSeconds(boostDuration);
 
-        // Reset to normal speed safely
-        movement.speed = originalSpeed;
+        // Reset to default
+        movement.speed = baseSpeed;
         isBoostActive = false;
 
         Debug.Log("Speed burst ended. Speed reset to " + movement.speed);

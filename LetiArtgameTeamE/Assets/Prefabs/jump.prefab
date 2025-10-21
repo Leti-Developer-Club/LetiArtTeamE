@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a75d0b6c4bb924a91ce440af159588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JumpBoots
-  jumpBoost: 2
+  jumpBoost: 4
   boostDuration: 5
   pickupEffect: {fileID: 0}
 --- !u!65 &-6650653602645115421
