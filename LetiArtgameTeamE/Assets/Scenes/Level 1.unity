@@ -768,7 +768,7 @@ GameObject:
   - component: {fileID: 1613124590}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -906,10 +906,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64662bfadd04974ca4da1cd2854667f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 10
+  speed: 7
   jumpForce: 5
+  laneDistance: 2.5
+  laneChangeSpeed: 10
+  slideDuration: 1
+  slideHeight: 0.5
+  isInvincible: 0
+  invincibleDuration: 7
   rb: {fileID: 1613124589}
-  horizontalMultiplier: 1.7
 --- !u!1 &1917439594
 GameObject:
   m_ObjectHideFlags: 0

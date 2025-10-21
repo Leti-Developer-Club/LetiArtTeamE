@@ -1,52 +1,147 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     bool alive = true;
 
-    public float speed = 5;
-    public float jumpForce = 5f; // how high the player jumps
+    [Header("Movement Settings")]
+    public float speed = 5f;
+    public float jumpForce = 7f;
+    public float laneDistance = 2.5f;
+    public float laneChangeSpeed = 10f;
+
+    [Header("Sliding Settings")]
+    public float slideDuration = 1f;
+    public float slideHeight = 0.5f;
+    private bool isSliding = false;
+    private float originalColliderHeight;
+    private Vector3 originalColliderCenter;
+
+    [Header("Invincibility Settings")]
+    public bool isInvincible = false;
+    public float invincibleDuration = 7f;
+    private Renderer playerRenderer;
+    private Color originalColor;
+
+    [Header("References")]
     public Rigidbody rb;
+    private CapsuleCollider playerCollider;
 
-    float horizontalInput;
-    public float horizontalMultiplier = 2;
+    private int lane = 1;
+    private bool isGrounded = true;
 
-    bool isGrounded = true; // check if player is on the ground
+    void Start()
+    {
+        playerCollider = GetComponent<CapsuleCollider>();
+        playerRenderer = GetComponentInChildren<Renderer>();
 
-    private void FixedUpdate()
+        originalColliderHeight = playerCollider.height;
+        originalColliderCenter = playerCollider.center;
+
+        if (playerRenderer != null)
+            originalColor = playerRenderer.material.color;
+    }
+
+    void Update()
     {
         if (!alive) return;
 
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        MoveForward();
+        HandleLaneSwitching();
+        HandleJump();
+        HandleSlide();
+        CheckFall();
     }
 
-    private void Update()
+    void MoveForward()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        Vector3 forwardMove = transform.forward * speed * Time.deltaTime;
+        rb.MovePosition(rb.position + forwardMove);
 
-        // jump input
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        Vector3 targetPosition = new Vector3((lane - 1) * laneDistance, rb.position.y, rb.position.z);
+        Vector3 moveTo = Vector3.MoveTowards(rb.position, targetPosition, laneChangeSpeed * Time.deltaTime);
+        rb.MovePosition(new Vector3(moveTo.x, rb.position.y, rb.position.z + speed * Time.deltaTime));
+    }
+
+    void HandleLaneSwitching()
+    {
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (lane > 0) lane--;
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (lane < 2) lane++;
+        }
+    }
+
+    void HandleJump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isSliding)
         {
             Jump();
         }
+    }
 
-        if (transform.position.y < -5)
+    void HandleSlide()
+    {
+        if (!isSliding && (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && isGrounded)
         {
-            Die();
+            StartCoroutine(Slide());
         }
+    }
+
+    IEnumerator Slide()
+    {
+        isSliding = true;
+
+        playerCollider.height = slideHeight;
+        playerCollider.center = new Vector3(originalColliderCenter.x, slideHeight / 2f, originalColliderCenter.z);
+
+        yield return new WaitForSeconds(slideDuration);
+
+        playerCollider.height = originalColliderHeight;
+        playerCollider.center = originalColliderCenter;
+
+        isSliding = false;
+    }
+
+    void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isGrounded = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            isGrounded = true;
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            if (isInvincible)
+            {
+                Destroy(collision.gameObject); // Destroy obstacle if invincible
+            }
+            else
+            {
+                Die();
+            }
+        }
+    }
+
+    void CheckFall()
+    {
+        if (transform.position.y < -5)
+            Die();
     }
 
     public void Die()
     {
         alive = false;
-        // Restart the game
-        Invoke("Restart", 2);
+        Invoke(nameof(Restart), 2);
     }
 
     void Restart()
@@ -54,18 +149,32 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void Jump()
+    // Public method to activate invincibility
+    public void ActivateInvincibility()
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isGrounded = false;
+        if (!isInvincible)
+            StartCoroutine(InvincibilityRoutine());
     }
 
-    // detect when player lands back on the ground
-    private void OnCollisionEnter(Collision collision)
+    IEnumerator InvincibilityRoutine()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        isInvincible = true;
+        float timer = 0f;
+
+        // Flash yellow color while invincible
+        while (timer < invincibleDuration)
         {
-            isGrounded = true;
+            if (playerRenderer != null)
+                playerRenderer.material.color = Color.Lerp(originalColor, Color.yellow, Mathf.PingPong(Time.time * 5f, 1));
+
+            timer += Time.deltaTime;
+            yield return null;
         }
+
+        // Reset color and state
+        if (playerRenderer != null)
+            playerRenderer.material.color = originalColor;
+
+        isInvincible = false;
     }
 }
