@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=8eec142a651c71948a1883374e172049&amp;type=3#MainMenuStyle" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; font-size: 20px; -unity-background-image-tint-color: rgb(255, 255, 255); background-image: url(&quot;project://database/Assets/bg%20art%20v1.png?fileID=2800000&amp;guid=744f452c34e34bc4da3b5e8ec3444298&amp;type=3#bg art v1&quot;);">
+        <ui:Label text="Main Menu" name="Header" class="header" style="height: 129px; font-size: 60px; white-space: nowrap; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&quot;);" />
+        <ui:Button text="Play" enable-rich-text="true" selectable="true" class="button" style="-unity-text-align: middle-center; justify-content: flex-start; width: 400px; height: 100px; align-content: flex-start; align-self: center; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; font-size: 40px;" />
+    </ui:VisualElement>
+</ui:UXML>
