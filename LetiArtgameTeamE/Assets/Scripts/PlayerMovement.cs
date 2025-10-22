@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -28,14 +28,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     public Rigidbody rb;
     private CapsuleCollider playerCollider;
+    private Animator animator;
 
     private int lane = 1;
     private bool isGrounded = true;
+    private bool isJumping = false; // ✅ keeps track if the player is still in the air
 
     void Start()
     {
         playerCollider = GetComponent<CapsuleCollider>();
         playerRenderer = GetComponentInChildren<Renderer>();
+        animator = GetComponent<Animator>();
 
         originalColliderHeight = playerCollider.height;
         originalColliderCenter = playerCollider.center;
@@ -53,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
         HandleSlide();
         CheckFall();
+
+        animator.SetBool("isRunning", isGrounded && !isSliding);
+        animator.SetBool("isJumping", !isGrounded); // ✅ animator knows when player is mid-air
     }
 
     void MoveForward()
@@ -100,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         playerCollider.height = slideHeight;
         playerCollider.center = new Vector3(originalColliderCenter.x, slideHeight / 2f, originalColliderCenter.z);
 
+        animator.SetTrigger("Slide");
+
         yield return new WaitForSeconds(slideDuration);
 
         playerCollider.height = originalColliderHeight;
@@ -112,18 +120,30 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
+        isJumping = true;
+
+        animator.ResetTrigger("Land");
+        animator.SetTrigger("Jump");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
+            if (!isGrounded)
+            {
+                animator.SetTrigger("Land"); // ✅ play land animation when touching ground
+            }
+
             isGrounded = true;
+            isJumping = false;
+        }
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             if (isInvincible)
             {
-                Destroy(collision.gameObject); // Destroy obstacle if invincible
+                Destroy(collision.gameObject);
             }
             else
             {
@@ -140,8 +160,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
+        if (!alive) return;
+
         alive = false;
-        Invoke(nameof(Restart), 2);
+        animator.SetTrigger("Die");
+
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        Invoke(nameof(Restart), 2f);
     }
 
     void Restart()
@@ -149,7 +176,6 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Public method to activate invincibility
     public void ActivateInvincibility()
     {
         if (!isInvincible)
@@ -161,7 +187,6 @@ public class PlayerMovement : MonoBehaviour
         isInvincible = true;
         float timer = 0f;
 
-        // Flash yellow color while invincible
         while (timer < invincibleDuration)
         {
             if (playerRenderer != null)
@@ -171,7 +196,6 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        // Reset color and state
         if (playerRenderer != null)
             playerRenderer.material.color = originalColor;
 
