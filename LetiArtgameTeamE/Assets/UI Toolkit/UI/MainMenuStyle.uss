@@ -1,0 +1,12 @@
+:root {
+}
+
+.header {
+}
+
+.button {
+    align-items: center;
+    width: 361px;
+    align-self: center;
+    -unity-background-image-tint-color: rgb(36, 13, 0);
+}

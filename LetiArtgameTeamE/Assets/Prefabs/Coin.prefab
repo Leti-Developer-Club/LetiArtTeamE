@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Coin
   turnSpeed: 90
-  collectSound: {fileID: 8300000, guid: 017d3b23a9a63b34b875e62273db1c9b, type: 3}
-  volume: 0.05
+  collectSound: {fileID: 8300000, guid: e0197b50eb42eba4d91e9880a1687d8f, type: 3}
+  volume: 1
 --- !u!54 &2569841832847489633
 Rigidbody:
   m_ObjectHideFlags: 0
