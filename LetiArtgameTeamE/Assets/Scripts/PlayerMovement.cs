@@ -168,13 +168,20 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        Invoke(nameof(Restart), 2f);
+        // ✅ Save the current level name before switching scenes
+        PlayerPrefs.SetString("LastLevel", SceneManager.GetActiveScene().name);
+
+        // ✅ Load the GameOver scene after a short delay
+        Invoke(nameof(LoadGameOverScene), 2f);
     }
 
-    void Restart()
+    void LoadGameOverScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameOver");
     }
+
+
+
 
     public void ActivateInvincibility()
     {

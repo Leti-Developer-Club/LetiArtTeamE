@@ -7,7 +7,7 @@ public class GameOverUI : MonoBehaviour
     private Button restartButton;
     private Button mainMenuButton;
 
-    void Start()
+    private void OnEnable()
     {
         var uiDocument = GetComponent<UIDocument>();
         var root = uiDocument.rootVisualElement;
@@ -15,22 +15,18 @@ public class GameOverUI : MonoBehaviour
         restartButton = root.Q<Button>("RestartButton");
         mainMenuButton = root.Q<Button>("MainMenuButton");
 
-        if (restartButton != null)
-            restartButton.clicked += RestartLevel;
-
-        if (mainMenuButton != null)
-            mainMenuButton.clicked += ReturnToMainMenu;
+        restartButton.clicked += RestartGame;
+        mainMenuButton.clicked += GoToMainMenu;
     }
 
-    private void RestartLevel()
+    private void RestartGame()
     {
-        Debug.Log("🔁 Restarting current level...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // ✅ Reload the last played level
+        SceneManager.LoadScene(PlayerPrefs.GetString("LastLevel", "Level1"));
     }
 
-    private void ReturnToMainMenu()
+    private void GoToMainMenu()
     {
-        Debug.Log("🏠 Returning to Main Menu...");
         SceneManager.LoadScene("MainMenu");
     }
 }
