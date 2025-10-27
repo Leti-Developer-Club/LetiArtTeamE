@@ -3,10 +3,10 @@
     <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/bg%20art%20v1.png?fileID=2800000&amp;guid=744f452c34e34bc4da3b5e8ec3444298&amp;type=3#bg art v1&quot;);">
         <ui:Label style="height: 69px; background-image: url(&quot;project://database/Assets/UI%20img/SELECT%20LEVEL.png?fileID=2800000&amp;guid=025081eb1ac6a6b4089001712a5a57c9&amp;type=3#SELECT LEVEL&quot;); width: 500px; -unity-text-align: upper-left; align-self: center; align-content: flex-start; justify-content: flex-start; align-items: stretch;" />
         <ui:Label style="height: 108px;" />
-        <ui:Button name="Level1Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%201.png?fileID=2800000&amp;guid=d5550e5156b368b46b069a9a50763819&amp;type=3#Level 1&quot;); height: 76px; color: rgb(27, 27, 27);" />
+        <ui:Button name="Level1Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%201.png?fileID=2800000&amp;guid=d5550e5156b368b46b069a9a50763819&amp;type=3#Level 1&quot;); height: 76px; color: rgb(27, 27, 27); background-color: rgba(188, 188, 188, 0);" />
         <ui:Label style="height: 41px;" />
-        <ui:Button name="Level2Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%202.png?fileID=2800000&amp;guid=063b0d814ed48ab45a74171a552ed6e8&amp;type=3#Level 2&quot;); height: 76px;" />
+        <ui:Button name="Level2Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%202.png?fileID=2800000&amp;guid=063b0d814ed48ab45a74171a552ed6e8&amp;type=3#Level 2&quot;); height: 76px; background-color: rgba(188, 188, 188, 0);" />
         <ui:Label style="height: 35px;" />
-        <ui:Button name="Level3Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%203.png?fileID=2800000&amp;guid=3089e356a509eb54fbe67b6a19361970&amp;type=3#Level 3&quot;); height: 76px;" />
+        <ui:Button name="Level3Button" class="button" style="background-image: url(&quot;project://database/Assets/UI%20img/Level%203.png?fileID=2800000&amp;guid=3089e356a509eb54fbe67b6a19361970&amp;type=3#Level 3&quot;); height: 76px; background-color: rgba(188, 188, 188, 0);" />
     </ui:VisualElement>
 </ui:UXML>
