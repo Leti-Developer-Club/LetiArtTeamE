@@ -41,7 +41,7 @@ public class SpeedBurst : MonoBehaviour
             PlayerMovement movement = other.GetComponent<PlayerMovement>();
             if (movement != null)
             {
-                // If a boost is already running, stop it and restart
+                // Stop any existing boost before applying a new one
                 if (isBoostActive && activeBoostCoroutine != null)
                     movement.StopCoroutine(activeBoostCoroutine);
 
@@ -57,9 +57,15 @@ public class SpeedBurst : MonoBehaviour
     {
         isBoostActive = true;
 
+        //  Show UI when boost starts
+        PowerUpUI ui = FindObjectOfType<PowerUpUI>();
+        if (ui != null)
+            ui.ShowPowerUp("Speed Burst", boostDuration);
+
         // Apply boost
+        float originalSpeed = movement.speed;
         movement.speed = baseSpeed * speedMultiplier;
-        Debug.Log("Speed burst activated! Speed = " + movement.speed);
+        Debug.Log("⚡ Speed burst activated! Speed = " + movement.speed);
 
         // Wait for the boost duration
         yield return new WaitForSeconds(boostDuration);
@@ -67,7 +73,10 @@ public class SpeedBurst : MonoBehaviour
         // Reset to default
         movement.speed = baseSpeed;
         isBoostActive = false;
+        Debug.Log(" Speed burst ended. Speed reset to " + movement.speed);
 
-        Debug.Log("Speed burst ended. Speed reset to " + movement.speed);
+        //  Hide UI when finished
+        if (ui != null)
+            ui.HidePowerUp();
     }
 }
