@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4129574824979417888}
   - component: {fileID: 4642753608637369081}
   - component: {fileID: 5107860468583536063}
-  - component: {fileID: 5444302805321125923}
+  - component: {fileID: -6380117164630207942}
   m_Layer: 0
   m_Name: skip
   m_TagString: Untagged
@@ -114,7 +114,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5444302805321125923
+--- !u!114 &-6380117164630207942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,8 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071ca576918bae1498fd578dc38f9c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkipPowerUp
-  skipDistance: 15
+  jumpForce: 12
   pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  volume: 1
 --- !u!1 &8109013318066338829
 GameObject:
   m_ObjectHideFlags: 0
