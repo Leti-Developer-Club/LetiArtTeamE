@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GroundTile : MonoBehaviour
 {
@@ -30,12 +30,17 @@ public class GroundTile : MonoBehaviour
 
     private void Start()
     {
+        // ✅ Use new Unity API if available
+#if UNITY_2023_1_OR_NEWER
+        groundSpawner = Object.FindFirstObjectByType<GroundSpawner>();
+#else
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
+#endif
 
         tileCount++;
 
-        // Only spawn from the 3rd tile onward
-        if (tileCount >= 3)
+        // ✅ Only start spawning from the 4th tile onward
+        if (tileCount > 3)
         {
             SpawnObstacle();
             SpawnCoins();
@@ -47,6 +52,12 @@ public class GroundTile : MonoBehaviour
     {
         groundSpawner.SpawnTile();
         Destroy(gameObject, 2);
+    }
+
+    // ✅ Add this function so GroundSpawner can reset it
+    public static void ResetTileCount()
+    {
+        tileCount = 0;
     }
 
     void SpawnObstacle()
