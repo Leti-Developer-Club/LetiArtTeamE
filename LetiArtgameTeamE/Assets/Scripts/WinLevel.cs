@@ -1,14 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class WinLevel : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject player;
-    [SerializeField] private float nextLevelDelay = 10f; // Delay before next level
+
+    [Header("Buttons")]
+    [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button mainMenuButton;
 
     private bool levelWon = false;
+
+    private void Start()
+    {
+        // Hook up button listeners (if assigned)
+        if (nextLevelButton != null)
+            nextLevelButton.onClick.AddListener(LoadNextLevel);
+
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.AddListener(LoadMainMenu);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,9 +39,7 @@ public class WinLevel : MonoBehaviour
     {
         // ✅ Show the win UI
         if (winUI != null)
-        {
             winUI.SetActive(true);
-        }
 
         // ✅ Stop player movement and physics
         if (player != null)
@@ -41,32 +53,35 @@ public class WinLevel : MonoBehaviour
 
             var movementScript = player.GetComponent<PlayerMovement>();
             if (movementScript != null)
-            {
                 movementScript.enabled = false;
-            }
         }
 
+        Time.timeScale = 0f; // Pause game for win UI
         Debug.Log("✅ Level Completed!");
-
-        // ✅ Delay load of the next level
-        Invoke(nameof(LoadNextLevel), nextLevelDelay);
     }
 
-    private void LoadNextLevel()
+    // ✅ Next Level button
+    public void LoadNextLevel()
     {
-        Time.timeScale = 1f; // Unpause before loading
+        Time.timeScale = 1f;
+
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
         int nextIndex = currentIndex + 1;
 
-        // ✅ Make sure the next scene exists
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextIndex);
         }
         else
         {
-            // If no next level, go back to Main Menu
             SceneManager.LoadScene("MainMenu");
         }
+    }
+
+    // ✅ Main Menu button
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }

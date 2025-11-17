@@ -1277,7 +1277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WinLevel
   winUI: {fileID: 2097171921}
   player: {fileID: 1581558211}
-  nextLevelDelay: 10
+  nextLevelButton: {fileID: 127384847}
+  mainMenuButton: {fileID: 573108994}
 --- !u!65 &921806127
 BoxCollider:
   m_ObjectHideFlags: 0

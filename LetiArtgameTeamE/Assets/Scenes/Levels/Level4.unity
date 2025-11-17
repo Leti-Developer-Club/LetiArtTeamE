@@ -1277,7 +1277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WinLevel
   winUI: {fileID: 2097171921}
   player: {fileID: 1581558211}
-  nextLevelDelay: 10
+  nextLevelButton: {fileID: 127384847}
+  mainMenuButton: {fileID: 573108994}
 --- !u!65 &921806127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1529,7 +1530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEVEL 2
+  m_text: LEVEL 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
