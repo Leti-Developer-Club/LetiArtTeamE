@@ -1,10 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/UI/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=8eec142a651c71948a1883374e172049&amp;type=3#MainMenuStyle" />
-    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/bg%20art%20v1.png?fileID=2800000&amp;guid=744f452c34e34bc4da3b5e8ec3444298&amp;type=3#bg art v1&quot;);">
+    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20img/bg%20art%20v1.png?fileID=2800000&amp;guid=744f452c34e34bc4da3b5e8ec3444298&amp;type=3#bg art v1&quot;);">
         <ui:Label class="header" style="background-image: url(&quot;project://database/Assets/UI%20img/Game%20over.png?fileID=2800000&amp;guid=a802f8ffd1a83a247b150e323b7185b4&amp;type=3#Game over&quot;); height: 202px; width: 1065px; align-items: center; align-self: center;" />
-        <ui:Label style="height: 46px;" />
-        <ui:Button name="RestartButton" class="button" style="width: 256px; height: 81px; -unity-text-align: middle-center; align-self: center; background-color: rgba(188, 188, 188, 0); background-image: url(&quot;project://database/Assets/UI%20img/Try%20again.png?fileID=2800000&amp;guid=53d6cc89bb51c4d4aa04c78cdf2a16f5&amp;type=3#Try again&quot;);" />
+        <ui:Label style="height: 140px;" />
+        <ui:Button name="RestartButton" class="button" style="width: 702px; height: 192px; -unity-text-align: middle-center; align-self: center; background-color: rgba(188, 188, 188, 0); background-image: url(&quot;project://database/Assets/UI%20img/Try%20again.png?fileID=2800000&amp;guid=53d6cc89bb51c4d4aa04c78cdf2a16f5&amp;type=3#Try again&quot;); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
         <ui:Label name="Label" style="height: 46px;" />
-        <ui:Button name="MainMenuButton" class="button" style="width: 256px; height: 78px; background-image: url(&quot;project://database/Assets/UI%20img/Main%20Menu.png?fileID=2800000&amp;guid=f13fed603263be849af67c4c3ccc2f49&amp;type=3#Main Menu&quot;); background-color: rgba(188, 188, 188, 0);" />
+        <ui:Button name="MainMenuButton" class="button" style="width: 702px; height: 188px; background-image: url(&quot;project://database/Assets/UI%20img/Main%20Menu.png?fileID=2800000&amp;guid=f13fed603263be849af67c4c3ccc2f49&amp;type=3#Main Menu&quot;); background-color: rgba(188, 188, 188, 0); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
     </ui:VisualElement>
 </ui:UXML>

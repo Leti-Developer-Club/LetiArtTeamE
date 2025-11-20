@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5444302805321125923}
   m_Layer: 0
   m_Name: skip
-  m_TagString: Untagged
+  m_TagString: Skip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,8 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071ca576918bae1498fd578dc38f9c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkipPowerUp
-  skipDistance: 15
+  jumpForce: 12
   pickupEffect: {fileID: 0}
+  pickupSound: {fileID: 0}
+  volume: 1
 --- !u!1 &8109013318066338829
 GameObject:
   m_ObjectHideFlags: 0

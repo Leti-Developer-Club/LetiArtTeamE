@@ -1,37 +1,40 @@
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
-
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-
-    public int score;
     public static GameManager inst;
 
-    public Text scoreText;
-
-    public void IncrementScore()
-    {
-        score++;
-        scoreText.text = "SCORE: " + score;
-    }
+    [Header("Score Settings")]
+    public int score = 0;
+    public TMP_Text scoreText; // Assign your TMP UI element in Inspector
 
     private void Awake()
     {
-        inst = this;
+        // Singleton pattern
+        if (inst == null)
+            inst = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     private void Start()
     {
-
+        UpdateScoreUI(); // Display initial score
     }
 
-
-    private void Update()
+    public void IncrementScore(int amount = 1)
     {
-
+        score += amount;
+        UpdateScoreUI();
     }
 
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+            scoreText.text = "SCORE: " + score;
+    }
 }

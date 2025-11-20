@@ -32,7 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
     private int lane = 1;
     private bool isGrounded = true;
-    private bool isJumping = false; // ✅ keeps track if the player is still in the air
+    private bool isJumping = false;
+
+    [Header("Skip Settings")]
+    public float skipJumpMultiplier = 1.5f; // Skip jump is higher than normal jump
 
     void Start()
     {
@@ -58,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         CheckFall();
 
         animator.SetBool("isRunning", isGrounded && !isSliding);
-        animator.SetBool("isJumping", !isGrounded); // ✅ animator knows when player is mid-air
+        animator.SetBool("isJumping", !isGrounded);
     }
 
     void MoveForward()
@@ -128,13 +131,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!isGrounded)
         {
-            if (!isGrounded)
-            {
-                animator.SetTrigger("Land"); // ✅ play land animation when touching ground
-            }
+            animator.SetTrigger("Land"); // Only trigger Land if player was in air
+        }
 
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform"))
+        {
             isGrounded = true;
             isJumping = false;
         }
@@ -168,10 +171,8 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        // ✅ Save the current level name before switching scenes
         PlayerPrefs.SetString("LastLevel", SceneManager.GetActiveScene().name);
 
-        // ✅ Load the GameOver scene after a short delay
         Invoke(nameof(LoadGameOverScene), 2f);
     }
 
@@ -179,9 +180,6 @@ public class PlayerMovement : MonoBehaviour
     {
         SceneManager.LoadScene("GameOver");
     }
-
-
-
 
     public void ActivateInvincibility()
     {
@@ -208,4 +206,39 @@ public class PlayerMovement : MonoBehaviour
 
         isInvincible = false;
     }
+
+    // ---------------------------
+    // Skip power-up logic
+    // ---------------------------
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Skip"))
+        {
+            Destroy(other.gameObject);
+            StartCoroutine(SkipJumpDelayed());
+        }
+    }
+
+    private IEnumerator SkipJumpDelayed()
+    {
+        // Wait 0.3 seconds before jumping
+        yield return new WaitForSeconds(0.3f);
+
+        // Force player into air state
+        isGrounded = false;
+        isJumping = true;
+
+        animator.ResetTrigger("Land");
+        animator.SetBool("isRunning", false);
+        animator.SetTrigger("Jump");
+
+        // Wait one frame to properly leave ground
+        yield return null;
+
+        // Reset vertical velocity and apply higher jump
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        rb.AddForce(Vector3.up * jumpForce * skipJumpMultiplier, ForceMode.Impulse);
+    }
+
+
 }
