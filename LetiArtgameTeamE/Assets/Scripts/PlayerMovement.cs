@@ -35,7 +35,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
 
     [Header("Skip Settings")]
-    public float skipJumpMultiplier = 1.5f; // Skip jump is higher than normal jump
+    public float skipJumpMultiplier = 1.5f;
+
+    [Header("Start Animation Settings")]
+    public float walkTime = 3f;       // How long walking plays before running starts
+    private bool startRunEnabled = false;
 
     void Start()
     {
@@ -48,6 +52,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerRenderer != null)
             originalColor = playerRenderer.material.color;
+
+        // Start walking animation
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isWalking", true);
+
+        // Start delayed running
+        StartCoroutine(StartRunningAfterDelay());
+    }
+
+    IEnumerator StartRunningAfterDelay()
+    {
+        yield return new WaitForSeconds(walkTime);
+
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", true);
+        startRunEnabled = true;
     }
 
     void Update()
@@ -60,7 +80,12 @@ public class PlayerMovement : MonoBehaviour
         HandleSlide();
         CheckFall();
 
-        animator.SetBool("isRunning", isGrounded && !isSliding);
+        // Only update running after the walking period is done
+        if (startRunEnabled)
+        {
+            animator.SetBool("isRunning", isGrounded && !isSliding);
+        }
+
         animator.SetBool("isJumping", !isGrounded);
     }
 
@@ -133,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrounded)
         {
-            animator.SetTrigger("Land"); // Only trigger Land if player was in air
+            animator.SetTrigger("Land");
         }
 
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform"))
@@ -207,9 +232,6 @@ public class PlayerMovement : MonoBehaviour
         isInvincible = false;
     }
 
-    // ---------------------------
-    // Skip power-up logic
-    // ---------------------------
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Skip"))
@@ -221,10 +243,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator SkipJumpDelayed()
     {
-        // Wait 0.3 seconds before jumping
         yield return new WaitForSeconds(0.3f);
 
-        // Force player into air state
         isGrounded = false;
         isJumping = true;
 
@@ -232,13 +252,9 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isRunning", false);
         animator.SetTrigger("Jump");
 
-        // Wait one frame to properly leave ground
         yield return null;
 
-        // Reset vertical velocity and apply higher jump
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce * skipJumpMultiplier, ForceMode.Impulse);
     }
-
-
 }
