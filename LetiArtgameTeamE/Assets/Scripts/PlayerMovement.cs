@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public float skipJumpMultiplier = 1.5f;
 
     [Header("Start Animation Settings")]
-    public float walkTime = 3f;       // How long walking plays before running starts
+    public float walkTime = 3f;       
     private bool startRunEnabled = false;
 
     void Start()
@@ -53,11 +53,11 @@ public class PlayerMovement : MonoBehaviour
         if (playerRenderer != null)
             originalColor = playerRenderer.material.color;
 
-        // Start walking animation
+        
         animator.SetBool("isRunning", false);
         animator.SetBool("isWalking", true);
 
-        // Start delayed running
+        
         StartCoroutine(StartRunningAfterDelay());
     }
 
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         HandleSlide();
         CheckFall();
 
-        // Only update running after the walking period is done
+        
         if (startRunEnabled)
         {
             animator.SetBool("isRunning", isGrounded && !isSliding);
@@ -191,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
         if (!alive) return;
 
         alive = false;
+
         animator.SetTrigger("Die");
 
         rb.linearVelocity = Vector3.zero;
@@ -198,8 +199,10 @@ public class PlayerMovement : MonoBehaviour
 
         PlayerPrefs.SetString("LastLevel", SceneManager.GetActiveScene().name);
 
-        Invoke(nameof(LoadGameOverScene), 2f);
+        
+        SceneManager.LoadScene("GameOver");
     }
+
 
     void LoadGameOverScene()
     {
