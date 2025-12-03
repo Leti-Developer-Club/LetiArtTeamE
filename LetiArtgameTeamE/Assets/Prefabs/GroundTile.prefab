@@ -175,8 +175,8 @@ MonoBehaviour:
   jumpingBotsPrefab: {fileID: 8812574902481646648, guid: 646552a709a948a448a185d07fcf07dc, type: 3}
   randomBuffPrefab: {fileID: 1063907512336264500, guid: e2137f62c7cb58b4eab5b309c12774e8, type: 3}
   magnetPrefab: {fileID: 2146148164090954332, guid: 59d28dc8599f5074baaad4653354c087, type: 3}
-  skipPrefab: {fileID: 6966575709926250402, guid: 38f51eb2fb0c2c94db2408a9009a6d92, type: 3}
-  speedBurstPrefab: {fileID: 7444113253637588304, guid: 08630134af11593499a3ba99ceeae81a, type: 3}
+  skipPrefab: {fileID: 8121777504327523763, guid: a73454fab9b948d4597addc98768cee2, type: 3}
+  speedBurstPrefab: {fileID: 8807642720970672327, guid: 05dfd40175776f94a959b590100c9c87, type: 3}
   invinciblePrefab: {fileID: 1403986917063174929, guid: cfc83fe37a245014c8ac3dcb33eb0654, type: 3}
   powerUPSpawnChance: 0.5
 --- !u!1 &8573578133913614379
