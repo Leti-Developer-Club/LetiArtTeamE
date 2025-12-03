@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundTile
   obstaclePrefab: {fileID: 5818178412312413687, guid: 86dabea278644ba429c1b46da215bb50, type: 3}
-  tallObstaclePrefab: {fileID: 5986016115652688800, guid: ae0aeb3328428fc47a8521a8aeab8d86, type: 3}
+  tallObstaclePrefab: {fileID: 7207335584302824789, guid: ae0aeb3328428fc47a8521a8aeab8d86, type: 3}
   tallObstacleChance: 0.25
   rampPrefab: {fileID: 5818178412312413687, guid: 09d84038c23b75a4a9d5aa91c9180956, type: 3}
   rampChance: 0.1
