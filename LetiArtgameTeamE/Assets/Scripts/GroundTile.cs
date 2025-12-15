@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GroundTile : MonoBehaviour
 {
@@ -20,17 +22,36 @@ public class GroundTile : MonoBehaviour
     [SerializeField] private float laneDistance = 2.5f;
 
     [Header("Power-Up Settings")]
-    [SerializeField] private GameObject jumpingBotsPrefab;
-    [SerializeField] private GameObject randomBuffPrefab;
-    [SerializeField] private GameObject magnetPrefab;
-    [SerializeField] private GameObject skipPrefab;
-    [SerializeField] private GameObject speedBurstPrefab;
-    [SerializeField] private GameObject invinciblePrefab;
     [SerializeField] private float powerUPSpawnChance = 0.09f;
+
+    [System.Serializable]
+    public class LevelPowerUpRule
+    {
+        public GameObject powerUpPrefab;
+        public int minLevel = 1;
+        public int maxLevel = 99;
+    }
+
+    [Header("Level Based PowerUps")]
+    public LevelPowerUpRule[] levelPowerUps;
+
+    private int currentLevel;
 
     private void Start()
     {
-        // ✅ Use new Unity API if available
+        // Detect level number automatically from scene name "Level1", "Level2", etc.
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName.StartsWith("Level"))
+        {
+            string levelNumber = sceneName.Replace("Level", "");
+            int.TryParse(levelNumber, out currentLevel);
+        }
+        else
+        {
+            currentLevel = 1;
+        }
+
 #if UNITY_2023_1_OR_NEWER
         groundSpawner = Object.FindFirstObjectByType<GroundSpawner>();
 #else
@@ -39,7 +60,6 @@ public class GroundTile : MonoBehaviour
 
         tileCount++;
 
-        // ✅ Only start spawning from the 4th tile onward
         if (tileCount > 3)
         {
             SpawnObstacle();
@@ -54,7 +74,6 @@ public class GroundTile : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    // ✅ Add this function so GroundSpawner can reset it
     public static void ResetTileCount()
     {
         tileCount = 0;
@@ -89,27 +108,31 @@ public class GroundTile : MonoBehaviour
 
     void SpawnPowerUp()
     {
-        float randomChance = Random.Range(0f, 1f);
-        if (randomChance > powerUPSpawnChance) return;
+        float chance = Random.Range(0f, 1f);
+        if (chance > powerUPSpawnChance)
+            return;
 
-        int randomIndex = Random.Range(0, 6);
-        GameObject powerUpToSpawn = null;
+        List<GameObject> validPowerUps = new List<GameObject>();
 
-        switch (randomIndex)
+        foreach (var rule in levelPowerUps)
         {
-            case 0: powerUpToSpawn = jumpingBotsPrefab; break;
-            case 1: powerUpToSpawn = randomBuffPrefab; break;
-            case 2: powerUpToSpawn = magnetPrefab; break;
-            case 3: powerUpToSpawn = skipPrefab; break;
-            case 4: powerUpToSpawn = speedBurstPrefab; break;
-            case 5: powerUpToSpawn = invinciblePrefab; break;
+            if (currentLevel >= rule.minLevel && currentLevel <= rule.maxLevel)
+            {
+                validPowerUps.Add(rule.powerUpPrefab);
+            }
         }
+
+        if (validPowerUps.Count == 0)
+            return;
+
+        GameObject selectedPowerUp = validPowerUps[Random.Range(0, validPowerUps.Count)];
 
         int lane = Random.Range(0, 3);
         float laneX = (lane - 1) * laneDistance;
         float offsetZ = Random.Range(5f, 15f);
 
         Vector3 spawnPos = transform.position + new Vector3(laneX, 1f, offsetZ);
-        Instantiate(powerUpToSpawn, spawnPos, Quaternion.identity, transform);
+
+        Instantiate(selectedPowerUp, spawnPos, Quaternion.identity, transform);
     }
 }
