@@ -343,8 +343,8 @@ Transform:
   m_GameObject: {fileID: 5400599897006352901}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.18, y: 4.01, z: -1.23}
-  m_LocalScale: {x: 0.25754, y: 2.1336615, z: 2.5649438}
+  m_LocalPosition: {x: 5.06, y: 2.73, z: -2.76}
+  m_LocalScale: {x: 0.16102172, y: 1.3340292, z: 1.6036799}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7709847899588191266}
@@ -519,8 +519,8 @@ MonoBehaviour:
   - powerUpPrefab: {fileID: 8807642720970672327, guid: 05dfd40175776f94a959b590100c9c87, type: 3}
     minLevel: 4
     maxLevel: 15
-  - powerUpPrefab: {fileID: 1403986917063174929, guid: cfc83fe37a245014c8ac3dcb33eb0654, type: 3}
-    minLevel: 4
+  - powerUpPrefab: {fileID: 1353936680708450846, guid: eeee01fa868f0484ab921e8eab0aa954, type: 3}
+    minLevel: 1
     maxLevel: 15
   - powerUpPrefab: {fileID: 1063907512336264500, guid: e2137f62c7cb58b4eab5b309c12774e8, type: 3}
     minLevel: 5

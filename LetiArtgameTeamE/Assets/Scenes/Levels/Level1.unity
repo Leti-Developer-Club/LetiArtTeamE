@@ -1841,7 +1841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinMagnet
   magnetRadius: 6
-  magnetForce: 20
+  magnetForce: 50
 --- !u!114 &1295648440
 MonoBehaviour:
   m_ObjectHideFlags: 0
